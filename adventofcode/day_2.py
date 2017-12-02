@@ -1,6 +1,9 @@
-def calcChecksum(doubleList):
-    differences = calcDifferences(doubleList)
-    return sum(differences)
+def calcChecksum(doubleList, differenceOrDivision):
+    if(differenceOrDivision):
+        lineResults = calcDifferences(doubleList)
+    else:
+        lineResults = calcEvenDivisions(doubleList)
+    return sum(lineResults)
 
 
 def calcDifferences(doubleList):
@@ -15,6 +18,24 @@ def calcDifferences(doubleList):
                 lowest = row[i]
         differenceList.append(biggest - lowest)
     return differenceList
+
+
+def calcEvenDivisions(doubleList):
+    divisonsList = list()
+    for row in doubleList:
+        for i in range(len(row)):
+            divisionChecker = row[i]
+            for j in range(i + 1, len(row)):
+                division = 0.0
+                if divisionChecker > row[j]:
+                    division = divisionChecker / row[j]
+                elif divisionChecker < row[j]:
+                    division = row[j] / divisionChecker
+
+                if division.is_integer():
+                    divisonsList.append(int(division))
+                    break
+    return divisonsList
 
 
 def doubleListOfStrings(randomString):
@@ -43,4 +64,5 @@ inputList = """116	1259	1045	679	1334	157	277	1217	218	641	1089	136	247	1195	239
 2432	4030	3397	4032	3952	2727	157	3284	3450	3229	4169	3471	4255	155	127	186
 919	615	335	816	138	97	881	790	855	89	451	789	423	108	95	116"""
 
-print(calcChecksum(doubleListOfStrings(inputList)))
+print(calcChecksum(doubleListOfStrings(inputList), True))
+print(calcChecksum(doubleListOfStrings(inputList), False))
